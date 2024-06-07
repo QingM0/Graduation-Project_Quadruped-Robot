@@ -37,42 +37,39 @@ const char *qweather_ca =
     "yOGBQMkKW+ESPMFgKuOXwIlCypTPRpgSabuY0MLTDXJLR27lk8QyKGOHQ+SwMj4K\n"
     "00u/I5sUKUErmgQfky3xxzlIPK1aEn8=\n"
     "-----END CERTIFICATE-----\n";
-const char *url = "https://devapi.qweather.com/v7/weather/now?location=101230110&key=46d23317ebe64262ae190eb77c01cbe9";
+const char *weather_url = "https://devapi.qweather.com/v7/weather/now?location=101230110&key=46d23317ebe64262ae190eb77c01cbe9";
 ArduinoJson::V704PB2::JsonDocument getweather()
 {
-    int i=0;
-    HTTPClient http;
-if(i==0){
-    http.begin(url, qweather_ca);
-    i++;
-}
-else if (i>300)
-{
-    i=0;
-}
+    int i = 0;
+    if (i == 0)
+    {
+        HTTPClient http;
+        http.begin(weather_url, qweather_ca);
 
-    http.setTimeout(10000);
-    http.GET();
-    WiFiClient *stream = http.getStreamPtr();                               // 获取HTTP响应流
-    int size = http.getSize();                                              // 获取 HTTP 响应体的大小
-    
-    uint8_t inbuff[size];                                                   // 初始化inbuff数组
-    stream->readBytes(inbuff, size);                                        // 将http流数据写入inbuff中
-    uint8_t *outbuf = NULL;                                                 // 解压后的输出流
-    uint32_t outresult = 0;                                                 // 解压后的大小，在调用解压方法后会被赋值。
-    int result = ArduinoUZlib::decompress(inbuff, size, outbuf, outresult); // 调用解压函数
-    Serial.write(outbuf, outresult);                                        // 输出解压后的数据
+        http.setTimeout(10000);
+        http.GET();
+        WiFiClient *stream = http.getStreamPtr(); // 获取HTTP响应流
+        int size = http.getSize();                // 获取 HTTP 响应体的大小
 
-    http.end();
-    String jsonStr = String((char *)outbuf); // 将解压后的数据转换为字符串
-    JsonDocument doc;
-    DeserializationError error = deserializeJson(doc, jsonStr); // 将json字符串转换为json对象
-    //if (error)
-    //{
-    //    Serial.print("deserializeJson() failed: ");
-    //    Serial.println(error.c_str());
-     //   return "<error>";
-    //}
+        uint8_t inbuff[size];                                                   // 初始化inbuff数组
+        stream->readBytes(inbuff, size);                                        // 将http流数据写入inbuff中
+        uint8_t *outbuf = NULL;                                                 // 解压后的输出流
+        uint32_t outresult = 0;                                                 // 解压后的大小，在调用解压方法后会被赋值。
+        int result = ArduinoUZlib::decompress(inbuff, size, outbuf, outresult); // 调用解压函数
+        Serial.write(outbuf, outresult);                                        // 输出解压后的数据
 
-    return doc;
+        http.end();
+        String jsonStr = String((char *)outbuf); // 将解压后的数据转换为字符串
+        JsonDocument doc;
+        DeserializationError error = deserializeJson(doc, jsonStr); // 将json字符串转换为json对象
+                                                                    // if (error)
+                                                                    //{
+                                                                    //     Serial.print("deserializeJson() failed: ");
+                                                                    //     Serial.println(error.c_str());
+                                                                    //    return "<error>";
+                                                                    //}
+
+            i++;
+        return doc;
+    }
 }

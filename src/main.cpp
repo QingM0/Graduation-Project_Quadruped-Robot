@@ -21,14 +21,18 @@ void setup()
     {
         U8G2.clearBuffer();
         delay(100);
-        U8G2.setCursor(wifiStatus, 20);
+        // U8G2.setCursor(wifiStatus, 20);
         U8G2.print("."); // wifiStatus, 5,
-        wifiStatus += 5;
+        // wifiStatus += 5;
         U8G2.sendBuffer();
     }
+    Serial.println("连接成功");
+    Serial.print("IP 地址：");
+    Serial.println(WiFi.localIP());
+    //getyiyang();
 }
 
 void loop()
 {
-    UI_display();
+     UI_display();
 }

@@ -3,6 +3,7 @@
 
 #include <ArduinoJson.h>
 
+ArduinoJson::JsonDocument getyiyang();
 void weather_display();
 void UI_display();
 String timeinfo();
