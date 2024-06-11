@@ -37,7 +37,7 @@ const char *qweather_ca =
     "yOGBQMkKW+ESPMFgKuOXwIlCypTPRpgSabuY0MLTDXJLR27lk8QyKGOHQ+SwMj4K\n"
     "00u/I5sUKUErmgQfky3xxzlIPK1aEn8=\n"
     "-----END CERTIFICATE-----\n";
-const char *weather_url = "https://devapi.qweather.com/v7/weather/now?location=101230110&key=46d23317ebe64262ae190eb77c01cbe9";
+const char *weather_url = "https://devapi.qweather.com/v7/weather/now?location=101230110&key=*****";
 ArduinoJson::V704PB2::JsonDocument getweather()
 {
         HTTPClient http;
