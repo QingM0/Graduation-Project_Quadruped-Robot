@@ -40,9 +40,6 @@ const char *qweather_ca =
 const char *weather_url = "https://devapi.qweather.com/v7/weather/now?location=101230110&key=46d23317ebe64262ae190eb77c01cbe9";
 ArduinoJson::V704PB2::JsonDocument getweather()
 {
-    int i = 0;
-    if (i == 0)
-    {
         HTTPClient http;
         http.begin(weather_url, qweather_ca);
 
@@ -69,7 +66,5 @@ ArduinoJson::V704PB2::JsonDocument getweather()
                                                                     //    return "<error>";
                                                                     //}
 
-            i++;
         return doc;
-    }
 }
