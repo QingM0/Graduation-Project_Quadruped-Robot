@@ -2,69 +2,86 @@
 #include <ArduinoJson.h>
 #include <Arduino.h>
 
-const char *yiyang_ca =
+const char *Hitokoto_ca =
     "-----BEGIN CERTIFICATE-----\n"
-    "MIIGWjCCBUKgAwIBAgIMZPs0hrBg/Xlp/8JSMA0GCSqGSIb3DQEBCwUAMFUxCzAJ\n"
-    "BgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSswKQYDVQQDEyJH\n"
-    "bG9iYWxTaWduIEdDQyBSNiBBbHBoYVNTTCBDQSAyMDIzMB4XDTI0MDQxNTAxNDkx\n"
-    "MloXDTI1MDUxNzAxNDkxMVowGDEWMBQGA1UEAwwNKi5oaXRva290by5jbjCCASIw\n"
-    "DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMZeSQt6FRHd3HB2ZAu5j0pQPdQ3\n"
-    "6fIDrwnKI3w4C45pWzagh/gs0ufQ9XZmmgqkCYknErjTynV4XmCpARXz4tSw4UCN\n"
-    "CrKDk8TKjN6jpRB5uGKUK2BiezjxHKE8Lmh7KVAlnS+PbsUVo7jpQd1EvDE8uexy\n"
-    "ZxTgr5PJxn13uWwwK2z5whR9RMviCbLNCmTWqxM4JvVP1dL+2jNxzjy29tYlV4Hc\n"
-    "elr9DdZpHrZpSec+A7a/xeGKAAnKJn4OhWDB/Lnsf3cihz75sK2X/dnbuNfeaLsy\n"
-    "2yUjjgmtp3Jq3OP23N916kx4dAP4nbWD+BHzXwlRTbMitQrjKq98ShfS04UCAwEA\n"
-    "AaOCA2UwggNhMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMIGZBggrBgEF\n"
-    "BQcBAQSBjDCBiTBJBggrBgEFBQcwAoY9aHR0cDovL3NlY3VyZS5nbG9iYWxzaWdu\n"
-    "LmNvbS9jYWNlcnQvZ3NnY2NyNmFscGhhc3NsY2EyMDIzLmNydDA8BggrBgEFBQcw\n"
-    "AYYwaHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyNmFscGhhc3NsY2Ey\n"
-    "MDIzMFcGA1UdIARQME4wCAYGZ4EMAQIBMEIGCisGAQQBoDIKAQMwNDAyBggrBgEF\n"
-    "BQcCARYmaHR0cHM6Ly93d3cuZ2xvYmFsc2lnbi5jb20vcmVwb3NpdG9yeS8wRAYD\n"
-    "VR0fBD0wOzA5oDegNYYzaHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9nc2djY3I2\n"
-    "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\n"
+    "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\n"
     "-----END CERTIFICATE-----\n";
 
-const char *yiyang_url = "https://v1.hitokoto.cn/?encode=text&max_length=10";
-ArduinoJson::JsonDocument getyiyang()
+const char *Hitokoto_url = "https://v1.hitokoto.cn/?encode=json&max_length=10";
+int Delayed_access_Hitokoto_link = 0;
+char response[1024];
+
+ArduinoJson::JsonDocument getHitokoto()
 {
+    Serial.printf("Delayed_access_Hitokoto_link: %d\n", Delayed_access_Hitokoto_link);
     HTTPClient http;
-    http.begin(yiyang_url, yiyang_ca);
+    if (Delayed_access_Hitokoto_link == 0)
+    {
+        http.begin(Hitokoto_url, Hitokoto_ca);
+        // http.setTimeout(10000);
 
-    http.setTimeout(10000);
+        int httpCode = http.GET();
 
-    int httpCode = http.GET();
+        // 获取响应状态码
+        Serial.printf("HTTP 状态码: %d\n", httpCode);
 
-    // 获取响应状态码
-    Serial.printf("HTTP 状态码: %d", httpCode);
+        // 获取响应正文
+        String response = http.getString();
+        Serial.println("响应数据");
+        Serial.println(response + "\n");
 
-    // 获取响应正文
-    String response = http.getString();
-    Serial.println("响应数据");
-    Serial.println(response);
+        http.end();
+    }
 
-    http.end();
+    if (Delayed_access_Hitokoto_link == 10)
+    {
+        Delayed_access_Hitokoto_link = 0;
+    }
 
-    // 创建 DynamicJsonDocument 对象
-    DynamicJsonDocument doc(1024);
+    Delayed_access_Hitokoto_link++;
 
     // 解析 JSON 数据
-    deserializeJson(doc, response);
-    String text = doc["hitokoto"].as<String>();
-     Serial.printf("温度: %d\n", text);
+    JsonDocument Hitokoto;
+    DeserializationError error = deserializeJson(Hitokoto, response);
+
+    // 检查解析错误
+    // if (error) {
+    //     Serial.print(F("deserializeJson() failed: "));
+    //     Serial.println(error.f_str());
+    //     return DynamicJsonDocument(0);  // 返回一个空文档
+    // }
+
+    // String text = Hitokoto["hitokoto"].as<String>();
+    // Serial.printf("句子: %s\n", text.c_str());
+
+    return Hitokoto;
 }

@@ -14,11 +14,7 @@ void weather_display()
 {
     // U8G2.clearBuffer();
     // U8G2.setFont(u8g2_font_wqy12_t_chinese2);
-    if (i == 0)
-    {
-        i++;
-        weatherData = getweather();
-    }
+    weatherData = getqweather();
 
     U8G2.setCursor(5, 15);
     String text = weatherData["now"]["text"].as<String>();

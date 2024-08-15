@@ -37,11 +37,16 @@ const char *qweather_ca =
     "yOGBQMkKW+ESPMFgKuOXwIlCypTPRpgSabuY0MLTDXJLR27lk8QyKGOHQ+SwMj4K\n"
     "00u/I5sUKUErmgQfky3xxzlIPK1aEn8=\n"
     "-----END CERTIFICATE-----\n";
-const char *weather_url = "https://devapi.qweather.com/v7/weather/now?location=101230110&key=46d23317ebe64262ae190eb77c01cbe9";
-ArduinoJson::V704PB2::JsonDocument getweather()
+const char *qweather_url = "https://devapi.qweather.com/v7/weather/now?location=101230110&key=46d23317ebe64262ae190eb77c01cbe9";
+int Delayed_access_qweather_link = 0;
+char jsonStr[1024];
+ArduinoJson::V704PB2::JsonDocument getqweather()
 {
-        HTTPClient http;
-        http.begin(weather_url, qweather_ca);
+    Serial.printf("Delayed_access_link: %d\n", Delayed_access_qweather_link);
+    HTTPClient http;
+    if (Delayed_access_qweather_link == 0)
+    {
+        http.begin(qweather_url, qweather_ca);
 
         http.setTimeout(10000);
         http.GET();
@@ -57,14 +62,25 @@ ArduinoJson::V704PB2::JsonDocument getweather()
 
         http.end();
         String jsonStr = String((char *)outbuf); // 将解压后的数据转换为字符串
-        JsonDocument doc;
-        DeserializationError error = deserializeJson(doc, jsonStr); // 将json字符串转换为json对象
-                                                                    // if (error)
-                                                                    //{
-                                                                    //     Serial.print("deserializeJson() failed: ");
-                                                                    //     Serial.println(error.c_str());
-                                                                    //    return "<error>";
-                                                                    //}
+    }
 
-        return doc;
+    Delayed_access_qweather_link++;
+    
+    if (Delayed_access_qweather_link == 10)
+    {
+        Delayed_access_qweather_link = 0;
+    }
+
+    JsonDocument qweather;
+    DeserializationError error = deserializeJson(qweather, jsonStr); // 将json字符串转换为json对象
+
+    Serial.println(jsonStr);
+    // if (error)
+    //{
+    //     Serial.print("deserializeJson() failed: ");
+    //     Serial.println(error.c_str());
+    //    return "<error>";
+    //}
+
+    return qweather;
 }
