@@ -10,8 +10,8 @@
 #include "time.h"
 
 // 使用 JsonDocument，而不指定是 Dynamic 或 Static，以提高灵活性
-ArduinoJson::JsonDocument getHitokoto();
-ArduinoJson::JsonDocument getqweather();
+void getHitokoto();
+void getqweather();
 
 void weather_display();
 void UI_display_main();

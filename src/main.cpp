@@ -51,63 +51,57 @@ void setup()
 
 void loop()
 {
-    // unsigned long currentMillis = millis();
+    unsigned long currentMillis = millis();
 
-    // if (currentMillis - previousMillis >= interval)
-    // {
-    //     // 保存上次检查的时间
-    //     previousMillis = currentMillis;
+    if (currentMillis - previousMillis >= interval)
+    {
+        // 保存上次检查的时间
+        previousMillis = currentMillis;
 
-    //     int ADC_X = analogRead(ps2_x);
-    //     int ADC_Y = analogRead(ps2_y);
-    //     int ADX_W = digitalRead(ps2_w);
+        int ADC_X = analogRead(ps2_x);
+        int ADC_Y = analogRead(ps2_y);
+        int ADX_W = digitalRead(ps2_w);
 
-    //     Serial.printf("x = %d, y = %d state = %d \n", ADC_X, ADC_Y, state);
-    //     // while (ADC_X >= 4000 );
-    //     if (ADC_X <= 0 && ADC_Y > 1000) //&& ADC_Y > 1000
-    // {
-    //     delay(100);
-    //     if (ADC_X <= 0 && ADC_Y > 1000) //&& ADC_Y > 1000
-    //     {
-    //         delay(10);
-    //         state++;
-    //         // while (ADC_X  <= 0 );
-    //     }
-    // }
+        Serial.printf("x = %d, y = %d state = %d \n", ADC_X, ADC_Y, state);
+        // while (ADC_X >= 4000 );
+        if (ADC_X <= 0 && ADC_Y > 1000) //&& ADC_Y > 1000
+        {
+            state++;
+            // while (ADC_X  <= 0 );
+        }
 
-    // if (ADC_X >= 4000 && ADC_Y > 1000) //&& ADC_Y > 1000
-    // {
-    //     delay(100);
-    //     if (ADC_X >= 4000 && ADC_Y > 1000) //&& ADC_Y > 1000
-    //     {
-    //         delay(10);
-    //         state--;
-    //     }
-    // }
-    // }
-    // if (state == 1)
-    // {
-    //     UI_display_main();
-    // }
-    // if (state == 0)
-    // {
-    //     UI_display_0();
-    // }
-    // if (state == 2)
-    // {
-    //     UI_display_2();
-    // }
+        if (ADC_X >= 4000 && ADC_Y > 1000) //&& ADC_Y > 1000
+        {
 
-    // if (state > 2)
-    // {
-    //     state = 0;
-    // }
+            state--;
+            // while (ADC_X >= 4000 );
+        }
+        if (state == 1)
+        {
+            UI_display_main();
+        }
+        if (state == 0)
+        {
+            UI_display_0();
+            getHitokoto();
+        }
+        if (state == 2)
+        {
+            UI_display_2();
+            getHitokoto();
+        }
 
-    // if (state < 0)
-    // {
-    //     state = 2;
-    // }
+        if (state > 2)
+        {
+            state = 0;
+        }
 
-    getqweather();
-    delay(1000);
+        if (state < 0)
+        {
+            state = 2;
+        }
+
+        // getHitokoto();
+        // delay(1000);
+    }
 }

@@ -39,8 +39,10 @@ const char *qweather_ca =
     "-----END CERTIFICATE-----\n";
 const char *qweather_url = "https://devapi.qweather.com/v7/weather/now?location=101230110&key=46d23317ebe64262ae190eb77c01cbe9";
 int Delayed_access_qweather_link = 0;
-char jsonStr[1024];
-ArduinoJson::V704PB2::JsonDocument getqweather()
+String jsonStr;
+String saved_qweather_text = "";
+String saved_qweather_temp = "";
+void getqweather()
 {
     Serial.printf("Delayed_access_link: %d\n", Delayed_access_qweather_link);
     HTTPClient http;
@@ -61,26 +63,28 @@ ArduinoJson::V704PB2::JsonDocument getqweather()
         Serial.write(outbuf, outresult);                                        // 输出解压后的数据
 
         http.end();
-        String jsonStr = String((char *)outbuf); // 将解压后的数据转换为字符串
+        jsonStr = String((char *)outbuf); // 将解压后的数据转换为字符串
     }
 
     Delayed_access_qweather_link++;
-    
+
     if (Delayed_access_qweather_link == 10)
     {
         Delayed_access_qweather_link = 0;
     }
 
-    JsonDocument qweather;
+    DynamicJsonDocument qweather(1024);
     DeserializationError error = deserializeJson(qweather, jsonStr); // 将json字符串转换为json对象
 
-    Serial.println(jsonStr);
-    // if (error)
-    //{
-    //     Serial.print("deserializeJson() failed: ");
-    //     Serial.println(error.c_str());
-    //    return "<error>";
-    //}
-
-    return qweather;
+    // Serial.println(jsonStr);
+     if (error)
+    {
+         Serial.print("deserializeJson() failed: ");
+         Serial.println(error.c_str());
+        return;
+    }
+    saved_qweather_text = qweather["now"]["text"].as<String>();
+    saved_qweather_temp = qweather["now"]["temp"].as<String>();
+    Serial.println("天气: " + saved_qweather_text);
+    Serial.println("温度: " + saved_qweather_temp + "°C");
 }

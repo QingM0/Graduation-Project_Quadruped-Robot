@@ -38,50 +38,61 @@ const char *Hitokoto_ca =
 
 const char *Hitokoto_url = "https://v1.hitokoto.cn/?encode=json&max_length=10";
 int Delayed_access_Hitokoto_link = 0;
-char response[1024];
+String response;
+String saved_Hitokoto = "";
+String saved_Hitokoto_From = "";
 
-ArduinoJson::JsonDocument getHitokoto()
+void getHitokoto()
 {
     Serial.printf("Delayed_access_Hitokoto_link: %d\n", Delayed_access_Hitokoto_link);
     HTTPClient http;
+
     if (Delayed_access_Hitokoto_link == 0)
     {
         http.begin(Hitokoto_url, Hitokoto_ca);
-        // http.setTimeout(10000);
-
-        int httpCode = http.GET();
+        int httpCode = http.GET();  // 发送 HTTP 请求
 
         // 获取响应状态码
         Serial.printf("HTTP 状态码: %d\n", httpCode);
 
-        // 获取响应正文
-        String response = http.getString();
-        Serial.println("响应数据");
-        Serial.println(response + "\n");
+        if (httpCode > 0)
+        {
+            // 获取响应正文并存储到 response 变量中
+            response = http.getString();
+            Serial.println("响应数据:");
+            Serial.println(response + "\n");
+        }
+        else
+        {
+            Serial.println("HTTP 请求失败");
+        }
 
-        http.end();
+        http.end();  // 结束 HTTP 请求
     }
 
-    if (Delayed_access_Hitokoto_link == 10)
+    Delayed_access_Hitokoto_link++;
+    if (Delayed_access_Hitokoto_link == 3)
     {
         Delayed_access_Hitokoto_link = 0;
     }
 
-    Delayed_access_Hitokoto_link++;
-
     // 解析 JSON 数据
-    JsonDocument Hitokoto;
+    DynamicJsonDocument Hitokoto(1024);  // 分配 1024 字节的缓冲区用于解析 JSON 数据
     DeserializationError error = deserializeJson(Hitokoto, response);
 
     // 检查解析错误
-    // if (error) {
-    //     Serial.print(F("deserializeJson() failed: "));
-    //     Serial.println(error.f_str());
-    //     return DynamicJsonDocument(0);  // 返回一个空文档
-    // }
+    if (error)
+    {
+        Serial.print(F("deserializeJson() failed: "));
+        Serial.println(error.c_str());
+        return;
+    }
 
-    // String text = Hitokoto["hitokoto"].as<String>();
-    // Serial.printf("句子: %s\n", text.c_str());
+    // 提取 JSON 数据中的句子和来源
+    saved_Hitokoto = Hitokoto["hitokoto"].as<String>();
+    saved_Hitokoto_From = Hitokoto["from"].as<String>();
 
-    return Hitokoto;
+    // 打印句子和来源
+    //Serial.println("句子: " + saved_Hitokoto);
+    Serial.println("来源: " + saved_Hitokoto_From);
 }
