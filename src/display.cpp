@@ -71,7 +71,7 @@ void Hitokoto_display()
     U8G2.setCursor(35, 55);
     U8G2.print(saved_Hitokoto_From);
 }
-void UI_display_main()
+void UI_display_time()
 {
     U8G2.setFont(u8g2_font_wqy16_t_chinese3);
     // U8G2.drawLine(0, 27, 128, 27);
@@ -82,7 +82,7 @@ void UI_display_main()
     Hitokoto_display();
     U8G2.sendBuffer();
 }
-void UI_display_0()
+void UI_display_weather()
 {
     U8G2.setFont(u8g2_font_wqy12_t_gb2312);
     // U8G2.drawLine(0, 27, 128, 27);
@@ -90,20 +90,6 @@ void UI_display_0()
     U8G2.clearBuffer();
     // AHT10_display();
     weather_display();
-    U8G2.sendBuffer();
-    // delay(100);
-}
-
-void UI_display_2()
-{
-    U8G2.setFont(u8g2_font_wqy12_t_gb2312);
-    // U8G2.drawLine(0, 27, 128, 27);
-    // String time = time_1();
-    U8G2.clearBuffer();
-    U8G2.setCursor(40, 30);
-    U8G2.print("新闻");
-    // AHT10_display();
-    // weather_display();
     U8G2.sendBuffer();
     // delay(100);
 }
