@@ -10,7 +10,6 @@
 #include "AHT10.h"
 #include "time.h"
 
-// 使用 JsonDocument，而不指定是 Dynamic 或 Static，以提高灵活性
 void getHitokoto();
 void getqweather();
 

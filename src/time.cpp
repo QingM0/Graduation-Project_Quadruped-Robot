@@ -3,9 +3,6 @@
 #include <NTPClient.h>
 #include "time.h"  
 
-// WiFiUDP ntpUDP;
-// NTPClient timeClient(ntpUDP, "ntp.aliyun.com",  60 *60 * 8, 60000);
-
 struct tm timeinfo;
 String time_1()
 {
@@ -32,14 +29,3 @@ String time_1()
 //     return String(buffer); // 将格式化的时间转换为String并返回
 // }
 
-
-// struct tm timeinfo;
-// void printLocalTime()
-// {
-//     if (!getLocalTime(&timeinfo))
-//     {
-//         Serial.println("Failed to obtain time");
-//         return;
-//     }
-//     Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
-// }
