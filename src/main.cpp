@@ -3,10 +3,8 @@
 #include "time.h"
 
 U8G2_SSD1306_128X64_NONAME_F_SW_I2C U8G2(U8G2_R0, /* clock=*/22, /* data=*/21, /* reset=*/16);
+SoftwareSerial mySerial(19, 18); // RX, TX
 
-const char *ssid = "#283446";
-const char *password = "qingmo_1";
-SoftwareSerial mySerial(19, 18); // RX, TX_pa2 
 String value;
 
 void setup()
@@ -16,49 +14,59 @@ void setup()
     U8G2.begin();
     U8G2.enableUTF8Print();
     U8G2.setFont(u8g2_font_wqy12_t_chinese2);
+
+    // 初始化EEPROM
+    EEPROM.begin(EEPROM_SIZE);
+    // 读取保存的WiFi信息
+    readWiFiFromEEPROM();
+    // 初始化舵机
     servo_initialization();
-    WiFi.begin(ssid, password, 6);
-
-    while (WiFi.status() != WL_CONNECTED)
+    // 检查并连接WiFi
+    if (String(ssid) != "")
     {
-        U8G2.clearBuffer();
-        U8G2.setFont(u8g2_font_wqy12_t_gb2312);
-        U8G2.setCursor(5, 20);
-        U8G2.print("正在联网...");
-        U8G2.sendBuffer();
+        connectToWiFi();
     }
-
-    configTime(60 * 60 * 8, 0, "ntp.aliyun.com"); // 用的阿里云的服务器
-    Serial.println("连接成功");
-    Serial.print("IP 地址：");
-    Serial.println(WiFi.localIP());
-    getqweather();
-    getHitokoto();
+    else
+    {
+        startAPMode();
+    }
 }
 
 void loop()
 {
-    if (mySerial.available())
+    // 如果WiFi已连接，处理串口通信
+    if (WiFi.status() == WL_CONNECTED)
     {
-        value = (mySerial.readString());
-        Serial.println(value);
-        if (value == "1")
+        if (mySerial.available())
         {
-            UI_display_time();
+            value = mySerial.readString();
+            Serial.println(value);
+
+            if (value == "1")
+            {
+                UI_display_time(); 
+            }
+            else if (value == "2")
+            {
+                UI_display_weather(); 
+                getHitokoto();        
+            }
+            else if (value == "3")
+            {
+                // 执行其他操作
+            }
+            else if (value == "4")
+            {
+                // 执行其他操作
+            }
+
+            Serial.print("收到串口1的数据: ");
+            Serial.println(value);
         }
-        if (value == "2")
-        {
-            UI_display_weather();
-            getHitokoto();
-        }
-        if (value == "3")
-        {
-        }
-        if (value == "4")
-        {
-        }
-        Serial.print("收到串口1的数据: ");
-        Serial.println(value);
-        Serial.print("111");
+    }
+    else
+    {
+        server.handleClient();
     }
 }
+

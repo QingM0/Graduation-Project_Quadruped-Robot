@@ -1,16 +1,11 @@
 #include "combined.h"
 #include "AHT10.h"
-#include <U8g2lib.h>
-#include <ArduinoJson.h>
-// #include <Arduino.h>
-#include <Adafruit_GFX.h>
+// #include <U8g2lib.h>
+// #include <ArduinoJson.h>
+// #include <Adafruit_GFX.h>
 
-extern U8G2_SSD1306_128X64_NONAME_F_SW_I2C U8G2;
-ArduinoJson::V704PB2::JsonDocument weatherData;
-extern String saved_Hitokoto;
-extern String saved_Hitokoto_From;
-extern String saved_qweather_text;
-extern String saved_qweather_temp;
+//ArduinoJson::V704PB2::JsonDocument weatherData;
+
 int i = 0;
 void weather_display()
 {
