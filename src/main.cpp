@@ -1,6 +1,6 @@
 #include "combined.h"
 // #include "AHT10.h"
-#include "time.h"
+//#include "time.h"
 
 U8G2_SSD1306_128X64_NONAME_F_SW_I2C U8G2(U8G2_R0, /* clock=*/22, /* data=*/21, /* reset=*/16);
 SoftwareSerial mySerial(19, 18); // RX, TX

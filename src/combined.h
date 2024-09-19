@@ -23,8 +23,6 @@ void UI_display_time();
 void UI_display_weather();
 
 void servo_initialization();
-void Rbt_Init();
-void move_forward();
 
 void startAPMode();
 void connectToWiFi();

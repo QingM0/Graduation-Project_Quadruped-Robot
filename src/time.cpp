@@ -1,6 +1,4 @@
-#include <WiFi.h>
-#include <WiFiUdp.h>
-#include <NTPClient.h>
+#include "combined.h"
 #include "time.h"  
 
 struct tm timeinfo;

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON API Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    button {
+      margin: 10px;
+      padding: 15px;
+      font-size: 16px;
+    }
+    #savedData {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>JSON API 按钮示例</h1>
+  
+  <!-- 按键区，数字1到10的JSON值 -->
+  <div>
+    <button onclick="sendJson(1)">JSON 1</button>
+    <button onclick="sendJson(2)">JSON 2</button>
+    <button onclick="sendJson(3)">JSON 3</button>
+    <button onclick="sendJson(4)">JSON 4</button>
+    <button onclick="sendJson(5)">JSON 5</button>
+    <button onclick="sendJson(6)">JSON 6</button>
+    <button onclick="sendJson(7)">JSON 7</button>
+    <button onclick="sendJson(8)">JSON 8</button>
+    <button onclick="sendJson(9)">JSON 9</button>
+    <button onclick="sendJson(10)">JSON 10</button>
+  </div>
+
+  <!-- 获取和清空数据的按键 -->
+  <div>
+    <button onclick="getSavedData()">获取保存的数据</button>
+    <button onclick="clearData()">清空数据</button>
+  </div>
+
+  <!-- 显示保存的数据 -->
+  <div id="savedData"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
