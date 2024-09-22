@@ -114,24 +114,25 @@ void processValues(String value)
     }
     else if (value == "3")
     {
-        bot_sleep();
+        void robot_position();
         sendDeleteRequest();
         serialValue = "";
         apiValue = "";
     }
     else if (value == "4")
     {
-        bot_test();
+    Serial.print("4");
+        void robot_Forward();
+
         sendDeleteRequest();
         serialValue = "";
         apiValue = "";
     }
     else if (value == "5")
     {
-        for (int i = 0; i < 5; i++)
-        {
-            bot_test1();
-        }
+    Serial.print("5");
+        void robot_Backward();
+
         sendDeleteRequest();
         serialValue = "";
         apiValue = "";

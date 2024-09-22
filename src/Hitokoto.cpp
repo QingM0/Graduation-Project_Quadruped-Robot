@@ -37,47 +37,36 @@ const char *Hitokoto_ca =
     "-----END CERTIFICATE-----\n";
 
 const char *Hitokoto_url = "https://v1.hitokoto.cn/?encode=json&max_length=10";
-int Delayed_access_Hitokoto_link = 0;
 String response;
 String saved_Hitokoto = "";
 String saved_Hitokoto_From = "";
 
 void getHitokoto()
 {
-    Serial.printf("Delayed_access_Hitokoto_link: %d\n", Delayed_access_Hitokoto_link);
     HTTPClient http;
 
-    if (Delayed_access_Hitokoto_link == 0)
+    http.begin(Hitokoto_url, Hitokoto_ca);
+    int httpCode = http.GET(); // 发送 HTTP 请求
+
+    // 获取响应状态码
+    Serial.printf("HTTP 状态码: %d\n", httpCode);
+
+    if (httpCode > 0)
     {
-        http.begin(Hitokoto_url, Hitokoto_ca);
-        int httpCode = http.GET();  // 发送 HTTP 请求
-
-        // 获取响应状态码
-        Serial.printf("HTTP 状态码: %d\n", httpCode);
-
-        if (httpCode > 0)
-        {
-            // 获取响应正文并存储到 response 变量中
-            response = http.getString();
-            Serial.println("响应数据:");
-            Serial.println(response + "\n");
-        }
-        else
-        {
-            Serial.println("HTTP 请求失败");
-        }
-
-        http.end();  // 结束 HTTP 请求
+        // 获取响应正文并存储到 response 变量中
+        response = http.getString();
+        Serial.println("响应数据:");
+        Serial.println(response + "\n");
+    }
+    else
+    {
+        Serial.println("HTTP 请求失败");
     }
 
-    Delayed_access_Hitokoto_link++;
-    if (Delayed_access_Hitokoto_link == 3)
-    {
-        Delayed_access_Hitokoto_link = 0;
-    }
+    http.end(); // 结束 HTTP 请求
 
     // 解析 JSON 数据
-    DynamicJsonDocument Hitokoto(1024);  // 分配 1024 字节的缓冲区用于解析 JSON 数据
+    DynamicJsonDocument Hitokoto(1024); // 分配 1024 字节的缓冲区用于解析 JSON 数据
     DeserializationError error = deserializeJson(Hitokoto, response);
 
     // 检查解析错误
@@ -93,6 +82,6 @@ void getHitokoto()
     saved_Hitokoto_From = Hitokoto["from"].as<String>();
 
     // 打印句子和来源
-    //Serial.println("句子: " + saved_Hitokoto);
+    // Serial.println("句子: " + saved_Hitokoto);
     Serial.println("来源: " + saved_Hitokoto_From);
 }

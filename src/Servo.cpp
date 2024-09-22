@@ -66,7 +66,7 @@ void servo_initialization()
 // |IO9  |             |IO13 |
 //  -----               -----
 
-void bot_sleep()
+void robot_position()
 {
   servo1.write(145);
   servo2.write(45);
@@ -76,29 +76,53 @@ void bot_sleep()
   servo6.write(135);
   servo7.write(45);
   servo8.write(145);
-}
-void bot_test()
-{
-  servo1.write(145);
-  servo2.write(45);
-  servo3.write(135);
-  servo4.write(25);
-  servo5.write(25);
-  servo6.write(135);
-  servo7.write(45);
-  servo8.write(145);
-  delay(500);
-  servo1.write(145 - 20);
-  servo2.write(45);
-  servo3.write(135);
-  servo4.write(25 + 20);
-  servo5.write(25 + 20);
-  servo6.write(135);
-  servo7.write(45);
-  servo8.write(145 - 20);
 }
 
-void bot_test1()
+void robot_Forward()
+{
+  Serial.print("robot_Forward");
+  servo1.write(145);
+  servo2.write(45);
+  servo3.write(135);
+  servo4.write(25);
+  servo5.write(25);
+  servo6.write(135);
+  servo7.write(45);
+  servo8.write(145);
+  delay(100);
+  servo1.write(165);
+  servo7.write(0);
+  servo8.write(165);
+  delay(100);
+  servo1.write(145);
+  servo8.write(145);
+  delay(100);
+  servo4.write(5);
+  servo5.write(5);
+  delay(100);
+  servo2.write(0);
+  servo3.write(180);
+  servo7.write(45);
+  delay(100);
+  servo4.write(25);
+  servo5.write(25);
+  delay(100);
+  servo1.write(165);
+  servo2.write(45);
+  servo8.write(165);
+  delay(100);
+  servo3.write(135);
+  servo6.write(180);
+  delay(100);
+  servo1.write(145);
+  servo8.write(145);
+  delay(100);
+  servo5.write(5);
+  delay(100);
+  servo5.write(25);
+  servo6.write(135);
+}
+void robot_Backward()
 {
   servo1.write(145);
   servo2.write(45);
@@ -108,94 +132,37 @@ void bot_test1()
   servo6.write(135);
   servo7.write(45);
   servo8.write(145);
-  delay(200);
-  servo1.write(145 + 20);
+  delay(100);
+  servo1.write(165);
+  servo2.write(0);
+  servo8.write(165);
+  delay(100);
+  servo1.write(145);
+  servo8.write(145);
+  delay(100);
+  servo4.write(5);
+  servo5.write(5);
+  delay(100);
   servo2.write(45);
-  servo3.write(135);
+  servo6.write(180);
+  servo7.write(0);
+  delay(100);
   servo4.write(25);
   servo5.write(25);
+  delay(100);
+  servo1.write(165);
+  servo7.write(0);
+  servo8.write(165);
+  delay(100);
+  servo3.write(180);
   servo6.write(135);
-  servo7.write(45 - 45);
-  servo8.write(145 + 20);
-  delay(200);
+  delay(100);
   servo1.write(145);
-  servo2.write(45);
+  servo8.write(145);
+  delay(100);
+  servo4.write(5);
+  delay(100);
   servo3.write(135);
   servo4.write(25);
-  servo5.write(25);
-  servo6.write(135);
-  servo7.write(45 - 45);
-  servo8.write(145);
-  delay(200);
-  servo1.write(145);
-  servo2.write(45);
-  servo3.write(135);
-  servo4.write(25 - 20);
-  servo5.write(25 - 20);
-  servo6.write(135);
-  servo7.write(45 - 45);
-  servo8.write(145);
-  delay(200);
-  servo1.write(145);
-  servo2.write(45 - 45);
-  servo3.write(135 + 45);
-  servo4.write(25 - 20);
-  servo5.write(25 - 20);
-  servo6.write(135);
-  servo7.write(45);
-  servo8.write(145);
-  delay(200);
-  servo1.write(145);
-  servo2.write(45 - 45);
-  servo3.write(135 + 45);
-  servo4.write(25);
-  servo5.write(25);
-  servo6.write(135);
-  servo7.write(45);
-  servo8.write(145);
-  delay(200);
-  servo1.write(145 + 20);
-  servo2.write(45);
-  servo3.write(135 + 45);
-  servo4.write(25);
-  servo5.write(25);
-  servo6.write(135);
-  servo7.write(45);
-  servo8.write(145 + 20);
-  delay(200);
-  servo1.write(145 + 20);
-  servo2.write(45);
-  servo3.write(135);
-  servo4.write(25);
-  servo5.write(25);
-  servo6.write(135 + 45);
-  servo7.write(45);
-  servo8.write(145 + 20);
-  delay(200);
-  servo1.write(145);
-  servo2.write(45);
-  servo3.write(135);
-  servo4.write(25);
-  servo5.write(25);
-  servo6.write(135 + 45);
-  servo7.write(45);
-  servo8.write(145);
-  delay(200);
-  servo1.write(145);
-  servo2.write(45);
-  servo3.write(135);
-  servo4.write(25);
-  servo5.write(25 - 20);
-  servo6.write(135 + 45);
-  servo7.write(45);
-  servo8.write(145);
-  delay(200);
-  servo1.write(145);
-  servo2.write(45);
-  servo3.write(135);
-  servo4.write(25);
-  servo5.write(25);
-  servo6.write(135);
-  servo7.write(45);
-  servo8.write(145);
+  delay(100);
 }

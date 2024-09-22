@@ -51,7 +51,7 @@ void handleFormSubmission()
     String html = "<!DOCTYPE html>";
     html += "<html><head>";
     html += "<meta charset=\"UTF-8\">";                          // 确保网页使用UTF-8编码
-    html += "<meta http-equiv=\"refresh\" content=\"3;url=/\">"; // 3秒后重定向到主页
+    html += "<meta http-equiv=\"refresh\" content=\"3;url=/https://control.qingmo.moe/\">"; // 3秒后重定向到主页
     html += "<title>保存成功</title>";
     html += "</head><body>";
     html += "<h1>保存成功！3秒后自动重启...</h1>";
