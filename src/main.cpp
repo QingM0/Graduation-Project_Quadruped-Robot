@@ -1,11 +1,12 @@
 #include "combined.h"
 // #include "AHT10.h"
-//#include "time.h"
+// #include "time.h"
 
 U8G2_SSD1306_128X64_NONAME_F_SW_I2C U8G2(U8G2_R0, /* clock=*/22, /* data=*/21, /* reset=*/16);
-SoftwareSerial mySerial(19, 18); // RX, TX
 
-String value;
+
+unsigned long previousMillis = 0;  // 用于计算时间间隔
+const long interval = 1000;        // 每秒请求一次
 
 void setup()
 {
@@ -35,38 +36,20 @@ void setup()
 void loop()
 {
     // 如果WiFi已连接，处理串口通信
+   unsigned long currentMillis = millis();
+    
+    // 如果WiFi已连接，处理串口通信和数据请求
     if (WiFi.status() == WL_CONNECTED)
     {
-        if (mySerial.available())
+        // 每秒请求一次数据并处理串口通信
+        if (currentMillis - previousMillis >= interval)
         {
-            value = mySerial.readString();
-            Serial.println(value);
-
-            if (value == "1")
-            {
-                UI_display_time(); 
-            }
-            else if (value == "2")
-            {
-                UI_display_weather(); 
-                getHitokoto();        
-            }
-            else if (value == "3")
-            {
-                // 执行其他操作
-            }
-            else if (value == "4")
-            {
-                // 执行其他操作
-            }
-
-            Serial.print("收到串口1的数据: ");
-            Serial.println(value);
+            previousMillis = currentMillis;
+            handleCommunicationAndData();  // 处理串口和服务器数据
         }
     }
     else
     {
-        server.handleClient();
+        server.handleClient();  // WiFi未连接时处理客户端请求
     }
 }
-

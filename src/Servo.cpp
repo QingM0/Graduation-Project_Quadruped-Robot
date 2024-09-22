@@ -13,7 +13,7 @@ Servo servo8;
 void servo_initialization()
 {
     // 定义每个舵机连接的引脚
-    const int servoPin1 = 32;
+    const int servoPin1 = 21;
     const int servoPin2 = 33;
     const int servoPin3 = 25;
     const int servoPin4 = 26;
@@ -65,4 +65,11 @@ void servo_initialization()
 void sleep()
 {
   servo4.write(90);
+  delay(100);
+  servo5.write(90);
+  delay(100);
+  servo6.write(90);
+  delay(100);
+  servo7.write(90);
+  
 }

@@ -33,6 +33,12 @@ void handleFormSubmission();
 void saveWiFiToEEPROM(String ssid, String password);
 void readWiFiFromEEPROM();
 
+void handleCommunicationAndData();
+void sendDeleteRequest();
+void processValues(String value);
+void fetchAPIData();
+
+
 String time_1();
 
 extern WebServer server;
@@ -46,6 +52,7 @@ extern String saved_Hitokoto_From;
 extern String saved_qweather_text;
 extern String saved_qweather_temp;
 
+extern SoftwareSerial mySerial;
 // EEPROM大小
 #define EEPROM_SIZE 512
 
