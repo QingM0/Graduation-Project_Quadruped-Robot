@@ -23,6 +23,9 @@ void UI_display_time();
 void UI_display_weather();
 
 void servo_initialization();
+void bot_sleep();
+void bot_test();
+void bot_test1();
 
 void startAPMode();
 void connectToWiFi();

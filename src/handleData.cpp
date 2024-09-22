@@ -23,17 +23,15 @@ void handleCommunicationAndData()
     if (!serialValue.isEmpty())
     {
         processValues(serialValue); // 使用串口数据
-        sendDeleteRequest();     // API数据处理后发送DELETE请求
+        // sendDeleteRequest();     // API数据处理后发送DELETE请求
     }
     else if (!apiValue.isEmpty()) // 如果串口数据为空，处理API数据
     {
         processValues(apiValue); // 使用API数据
-        sendDeleteRequest();     // API数据处理后发送DELETE请求
+        // sendDeleteRequest();     // API数据处理后发送DELETE请求
     }
 
     // 清空串口和API数据，以便下一轮读取
-    serialValue = "";
-    apiValue = "";
 }
 
 // 获取服务器数据并存储在 apiValue 中
@@ -102,19 +100,41 @@ void processValues(String value)
     if (value == "1")
     {
         UI_display_time();
+        sendDeleteRequest();
+        serialValue = "";
+        apiValue = "";
     }
     else if (value == "2")
     {
         UI_display_weather();
         getHitokoto();
+        sendDeleteRequest();
+        serialValue = "";
+        apiValue = "";
     }
     else if (value == "3")
     {
-        // 执行其他操作
+        bot_sleep();
+        sendDeleteRequest();
+        serialValue = "";
+        apiValue = "";
     }
     else if (value == "4")
     {
-        // 执行其他操作
+        bot_test();
+        sendDeleteRequest();
+        serialValue = "";
+        apiValue = "";
+    }
+    else if (value == "5")
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            bot_test1();
+        }
+        sendDeleteRequest();
+        serialValue = "";
+        apiValue = "";
     }
 
     Serial.print("处理的value: ");
