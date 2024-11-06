@@ -6,7 +6,7 @@ U8G2_SSD1306_128X64_NONAME_F_SW_I2C U8G2(U8G2_R0, /* clock=*/22, /* data=*/21, /
 
 
 unsigned long previousMillis = 0;  // 用于计算时间间隔
-const long interval = 2000;        // 每秒请求一次
+const long interval = 3000;        // 每秒请求一次
 
 void setup()
 {

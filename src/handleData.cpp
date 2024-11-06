@@ -6,23 +6,20 @@ String apiValue;
 // 处理串口通信和服务器数据
 void handleCommunicationAndData()
 {
-    // 检查串口通信
-    if (mySerial.available())
-    {
-        serialValue = mySerial.readString();
-        // if (!serialValue.isEmpty()) // 检查是否读取到有效数据
-        // {
-        //     Serial.println("串口数据: " + serialValue);
-        // }
-    }
+    // int iii = 0;
+    // // 检查串口通信
+    // if (mySerial.available())
+    // {
+    //     serialValue = mySerial.readString();
 
-    // 获取并处理服务器数据
+    // }
+
     fetchAPIData();
-
     // 如果串口数据存在且有效，则优先处理串口数据
     if (!serialValue.isEmpty())
     {
         processValues(serialValue); // 使用串口数据
+
         // sendDeleteRequest();     // API数据处理后发送DELETE请求
     }
     else if (!apiValue.isEmpty()) // 如果串口数据为空，处理API数据
@@ -32,13 +29,46 @@ void handleCommunicationAndData()
     }
 
     // 清空串口和API数据，以便下一轮读取
+    // sendDeleteRequest();
+    // serialValue = "";
+    // apiValue = ""; 
 }
 
+const char *data_ca =
+    "-----BEGIN CERTIFICATE-----\n"
+    "MIIFBTCCAu2gAwIBAgIQS6hSk/eaL6JzBkuoBI110DANBgkqhkiG9w0BAQsFADBP\n"
+    "MQswCQYDVQQGEwJVUzEpMCcGA1UEChMgSW50ZXJuZXQgU2VjdXJpdHkgUmVzZWFy\n"
+    "Y2ggR3JvdXAxFTATBgNVBAMTDElTUkcgUm9vdCBYMTAeFw0yNDAzMTMwMDAwMDBa\n"
+    "Fw0yNzAzMTIyMzU5NTlaMDMxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBF\n"
+    "bmNyeXB0MQwwCgYDVQQDEwNSMTAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK\n"
+    "AoIBAQDPV+XmxFQS7bRH/sknWHZGUCiMHT6I3wWd1bUYKb3dtVq/+vbOo76vACFL\n"
+    "YlpaPAEvxVgD9on/jhFD68G14BQHlo9vH9fnuoE5CXVlt8KvGFs3Jijno/QHK20a\n"
+    "/6tYvJWuQP/py1fEtVt/eA0YYbwX51TGu0mRzW4Y0YCF7qZlNrx06rxQTOr8IfM4\n"
+    "FpOUurDTazgGzRYSespSdcitdrLCnF2YRVxvYXvGLe48E1KGAdlX5jgc3421H5KR\n"
+    "mudKHMxFqHJV8LDmowfs/acbZp4/SItxhHFYyTr6717yW0QrPHTnj7JHwQdqzZq3\n"
+    "DZb3EoEmUVQK7GH29/Xi8orIlQ2NAgMBAAGjgfgwgfUwDgYDVR0PAQH/BAQDAgGG\n"
+    "MB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATASBgNVHRMBAf8ECDAGAQH/\n"
+    "AgEAMB0GA1UdDgQWBBS7vMNHpeS8qcbDpHIMEI2iNeHI6DAfBgNVHSMEGDAWgBR5\n"
+    "tFnme7bl5AFzgAiIyBpY9umbbjAyBggrBgEFBQcBAQQmMCQwIgYIKwYBBQUHMAKG\n"
+    "Fmh0dHA6Ly94MS5pLmxlbmNyLm9yZy8wEwYDVR0gBAwwCjAIBgZngQwBAgEwJwYD\n"
+    "VR0fBCAwHjAcoBqgGIYWaHR0cDovL3gxLmMubGVuY3Iub3JnLzANBgkqhkiG9w0B\n"
+    "AQsFAAOCAgEAkrHnQTfreZ2B5s3iJeE6IOmQRJWjgVzPw139vaBw1bGWKCIL0vIo\n"
+    "zwzn1OZDjCQiHcFCktEJr59L9MhwTyAWsVrdAfYf+B9haxQnsHKNY67u4s5Lzzfd\n"
+    "u6PUzeetUK29v+PsPmI2cJkxp+iN3epi4hKu9ZzUPSwMqtCceb7qPVxEbpYxY1p9\n"
+    "1n5PJKBLBX9eb9LU6l8zSxPWV7bK3lG4XaMJgnT9x3ies7msFtpKK5bDtotij/l0\n"
+    "GaKeA97pb5uwD9KgWvaFXMIEt8jVTjLEvwRdvCn294GPDF08U8lAkIv7tghluaQh\n"
+    "1QnlE4SEN4LOECj8dsIGJXpGUk3aU3KkJz9icKy+aUgA+2cP21uh6NcDIS3XyfaZ\n"
+    "QjmDQ993ChII8SXWupQZVBiIpcWO4RqZk3lr7Bz5MUCwzDIA359e57SSq5CCkY0N\n"
+    "4B6Vulk7LktfwrdGNVI5BsC9qqxSwSKgRJeZ9wygIaehbHFHFhcBaMDKpiZlBHyz\n"
+    "rsnnlFXCb5s8HKn5LsUgGvB24L7sGNZP2CX7dhHov+YhD+jozLW2p9W4959Bz2Ei\n"
+    "RmqDtmiXLnzqTpXbI+suyCsohKRg6Un0RC47+cpiVwHiXZAW+cn8eiNIjqbVgXLx\n"
+    "KPpdzvvtTnOPlC7SQZSYmdunr3Bf9b77AiC/ZidstK36dRILKz7OA54=\n"
+    "-----END CERTIFICATE-----\n";
 // 获取服务器数据并存储在 apiValue 中
 void fetchAPIData()
 {
     HTTPClient http;
-    http.begin("https://test.qingmo.moe/data"); // 开始连接
+    http.begin("https://test.qingmo.moe/data", data_ca); // 开始连接
 
     int httpCode = http.GET(); // 发送GET请求
 
@@ -97,12 +127,14 @@ void sendDeleteRequest()
 // 根据串口或API的值执行操作
 void processValues(String value)
 {
+    int ii = 0;
     if (value == "1")
     {
         UI_display_time();
-        sendDeleteRequest();
+        Serial.println("pm1.1");
         serialValue = "";
         apiValue = "";
+        sendDeleteRequest();
     }
     else if (value == "2")
     {
@@ -114,15 +146,17 @@ void processValues(String value)
     }
     else if (value == "3")
     {
-        void robot_position();
-        sendDeleteRequest();
+        robot_position();
         serialValue = "";
         apiValue = "";
+        sendDeleteRequest();
     }
     else if (value == "4")
     {
-    Serial.print("4");
-        void robot_Forward();
+        for (int i = 0; i < 3; i++)
+        {
+            robot_Forward();
+        }
 
         sendDeleteRequest();
         serialValue = "";
@@ -130,14 +164,27 @@ void processValues(String value)
     }
     else if (value == "5")
     {
-    Serial.print("5");
-        void robot_Backward();
+        for (int i = 0; i < 3; i++)
+        {
+
+            robot_Backward();
+        }
 
         sendDeleteRequest();
         serialValue = "";
         apiValue = "";
     }
-
+    if (ii < 2)
+    {
+        ii++;
+    }
+    else
+    {
+        sendDeleteRequest();
+        serialValue = "";
+        apiValue = "";
+        ii = 0;
+    }
     Serial.print("处理的value: ");
     Serial.println(value);
 }

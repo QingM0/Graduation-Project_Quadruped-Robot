@@ -17,10 +17,10 @@ void servo_initialization()
   const int servoPin7 = 4;
   const int servoPin6 = 16;
   const int servoPin5 = 17;
-  const int servoPin4 = 25;
-  const int servoPin3 = 33;
-  const int servoPin2 = 32;
-  const int servoPin1 = 26;
+  const int servoPin4 = 26;
+  const int servoPin3 = 25;
+  const int servoPin2 = 33;
+  const int servoPin1 = 32;
 
   // 分配所有可用的PWM定时器
   ESP32PWM::allocateTimer(0);
@@ -68,58 +68,84 @@ void servo_initialization()
 
 void robot_position()
 {
-  servo1.write(145);
+  servo1.write(155);
+  delay(50);
   servo2.write(45);
+  delay(50);
   servo3.write(135);
-  servo4.write(25);
-  servo5.write(25);
+  delay(50);
+  servo4.write(15);
+  delay(50);
+  servo5.write(15);
+  delay(50);
   servo6.write(135);
+  delay(50);
   servo7.write(45);
-  servo8.write(145);
+  delay(50);
+  servo8.write(155);
+  delay(50);
 }
 
 void robot_Forward()
 {
-  Serial.print("robot_Forward");
   servo1.write(145);
+  delay(50);
   servo2.write(45);
+  delay(50);
   servo3.write(135);
+  delay(50);
   servo4.write(25);
+  delay(50);
   servo5.write(25);
+  delay(50);
   servo6.write(135);
+  delay(50);
   servo7.write(45);
+  delay(50);
   servo8.write(145);
   delay(100);
   servo1.write(165);
+  delay(50);
   servo7.write(0);
+  delay(50);
   servo8.write(165);
   delay(100);
   servo1.write(145);
+  delay(50);
   servo8.write(145);
   delay(100);
   servo4.write(5);
+  delay(50);
   servo5.write(5);
   delay(100);
   servo2.write(0);
+  delay(50);
   servo3.write(180);
+  delay(50);
   servo7.write(45);
   delay(100);
   servo4.write(25);
+  delay(50);
   servo5.write(25);
   delay(100);
   servo1.write(165);
+  delay(50);
   servo2.write(45);
+  delay(50);
   servo8.write(165);
   delay(100);
   servo3.write(135);
+  delay(50);
   servo6.write(180);
   delay(100);
   servo1.write(145);
+  delay(50);
   servo8.write(145);
   delay(100);
   servo5.write(5);
   delay(100);
   servo5.write(25);
+  delay(50);
   servo6.write(135);
 }
 void robot_Backward()
