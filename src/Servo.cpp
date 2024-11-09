@@ -54,141 +54,250 @@ void servo_initialization()
 
 //  -----               -----
 // | D1  |             | D5 |
-// |IO18 |             |IO0 |
+// |IO32 |             |IO17 |
 //  ----- -----   ----- -----
 //       | D2  | | D6  |
-//       |IO19 | |IO1  |
+//       |IO33 | |IO16  |
 //        -----   -----
 //       | D3  | | D7  |
-//       | IO8 | |IO12 |
+//       | IO25 | |IO4 |
 //  ----- -----   ----- -----
 // | D4  |             | D8  |
-// |IO9  |             |IO13 |
+// |IO26  |             |IO2 |
 //  -----               -----
 
 void robot_position()
 {
-  servo1.write(155);
-  delay(50);
+  servo1.write(145);
+  delay(10);
   servo2.write(45);
-  delay(50);
+  delay(10);
   servo3.write(135);
-  delay(50);
-  servo4.write(15);
-  delay(50);
-  servo5.write(15);
-  delay(50);
+  delay(10);
+  servo4.write(25);
+  delay(10);
+  servo5.write(25);
+  delay(10);
   servo6.write(135);
-  delay(50);
+  delay(10);
   servo7.write(45);
-  delay(50);
-  servo8.write(155);
-  delay(50);
+  delay(10);
+  servo8.write(145);
+  delay(10);
 }
-
 void robot_Forward()
 {
   servo1.write(145);
-  delay(50);
+  delay(10);
   servo2.write(45);
-  delay(50);
+  delay(10);
   servo3.write(135);
-  delay(50);
+  delay(10);
   servo4.write(25);
-  delay(50);
+  delay(10);
   servo5.write(25);
-  delay(50);
+  delay(10);
   servo6.write(135);
-  delay(50);
+  delay(10);
   servo7.write(45);
-  delay(50);
+  delay(10);
   servo8.write(145);
-  delay(100);
-  servo1.write(165);
   delay(50);
+  servo1.write(165);
+  delay(10);
   servo7.write(0);
-  delay(50);
+  delay(10);
   servo8.write(165);
-  delay(100);
-  servo1.write(145);
   delay(50);
+  servo1.write(145);
+  delay(10);
   servo8.write(145);
-  delay(100);
+  delay(50);
   servo4.write(5);
-  delay(50);
+  delay(10);
   servo5.write(5);
-  delay(100);
+  delay(50);
   servo2.write(0);
-  delay(50);
+  delay(10);
   servo3.write(180);
-  delay(50);
+  delay(10);
   servo7.write(45);
-  delay(100);
+  delay(50);
   servo4.write(25);
-  delay(50);
+  delay(10);
   servo5.write(25);
-  delay(100);
+  delay(50);
   servo1.write(165);
-  delay(50);
+  delay(10);
   servo2.write(45);
-  delay(50);
+  delay(10);
   servo8.write(165);
-  delay(100);
+  delay(50);
   servo3.write(135);
-  delay(50);
+  delay(10);
   servo6.write(180);
-  delay(100);
+  delay(50);
   servo1.write(145);
-  delay(50);
+  delay(10);
   servo8.write(145);
-  delay(100);
-  servo5.write(5);
-  delay(100);
-  servo5.write(25);
   delay(50);
+  servo5.write(5);
+  delay(50);
+  servo5.write(25);
+  delay(10);
   servo6.write(135);
 }
 void robot_Backward()
 {
-  servo1.write(145);
+  servo1.write(145);//1
+  delay(10);
   servo2.write(45);
+  delay(10);
   servo3.write(135);
+  delay(10);
   servo4.write(25);
+  delay(10);
   servo5.write(25);
+  delay(10);
   servo6.write(135);
+  delay(10);
   servo7.write(45);
+  delay(10);
   servo8.write(145);
-  delay(100);
-  servo1.write(165);
+  delay(50);
+  servo1.write(165);//2
+  delay(10);
   servo2.write(0);
+  delay(10);
   servo8.write(165);
-  delay(100);
-  servo1.write(145);
+  delay(50);
+  servo1.write(145);//3
+  delay(10);
   servo8.write(145);
-  delay(100);
+  delay(50);
   servo4.write(5);
+  delay(10);
   servo5.write(5);
-  delay(100);
+  delay(50);
   servo2.write(45);
+  delay(10);
   servo6.write(180);
+  delay(10);
   servo7.write(0);
-  delay(100);
+  delay(50);
   servo4.write(25);
+  delay(10);
   servo5.write(25);
-  delay(100);
-  servo1.write(165);
-  servo7.write(0);
+  delay(50);
+  servo1.write(165);//7
+  delay(10);
+  servo7.write(45);
+  delay(10);
   servo8.write(165);
-  delay(100);
-  servo3.write(180);
+  delay(50);
+  servo3.write(90);
+  delay(10);
   servo6.write(135);
-  delay(100);
-  servo1.write(145);
+  delay(50);
+  servo1.write(145);//9
+  delay(10);
   servo8.write(145);
-  delay(100);
+  delay(50);
   servo4.write(5);
-  delay(100);
+  delay(50);
   servo3.write(135);
+  delay(10);
   servo4.write(25);
-  delay(100);
 }
+void robot_Left()
+{
+  servo1.write(145);
+  delay(10);
+  servo2.write(45);
+  delay(10);
+  servo3.write(135);
+  delay(10);
+  servo4.write(25);
+  delay(10);
+  servo5.write(25);
+  delay(10);
+  servo6.write(135);
+  delay(10);
+  servo7.write(45);
+  delay(10);
+  servo8.write(145);
+  delay(50);
+
+  servo3.write(90);
+  delay(10);
+  servo4.write(5);
+  delay(10);
+  servo5.write(5);
+  delay(50);
+
+  servo4.write(25);
+  delay(10);
+  servo5.write(25);
+  delay(50);
+
+  servo1.write(165);
+  delay(10);
+  servo8.write(165);
+  delay(50);
+
+  servo2.write(90);
+  delay(10);
+  servo3.write(135);
+  delay(10);
+  servo6.write(90);
+  delay(50);
+
+  servo1.write(145);
+  delay(10);
+  servo8.write(145);
+  delay(50);
+
+  servo4.write(5);
+  delay(10);
+  servo5.write(5);
+  delay(10);
+  servo6.write(135);
+  delay(50);
+
+  servo2.write(45);
+  delay(10);
+  servo7.write(90);
+  delay(50);
+
+  servo4.write(25);
+  delay(10);
+  servo5.write(25);
+  delay(50);
+
+  servo8.write(165);
+  delay(50);
+
+  servo7.write(45);
+  delay(10);
+  servo8.write(145);
+  delay(50);
+}
+// void robot_right()
+// {
+//   servo1.write(145);
+//   delay(10);
+//   servo2.write(45);
+//   delay(10);
+//   servo3.write(135);
+//   delay(10);
+//   servo4.write(25);
+//   delay(10);
+//   servo5.write(25);
+//   delay(10);
+//   servo6.write(135);
+//   delay(10);
+//   servo7.write(45);
+//   delay(10);
+//   servo8.write(145);
+//   delay(10);
+// }

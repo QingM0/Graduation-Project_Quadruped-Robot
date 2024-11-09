@@ -1,38 +1,4 @@
 #include "combined.h"
-SoftwareSerial mySerial(19, 18); // RX, TX
-
-String serialValue;
-String apiValue;
-// 处理串口通信和服务器数据
-void handleCommunicationAndData()
-{
-    // int iii = 0;
-    // // 检查串口通信
-    // if (mySerial.available())
-    // {
-    //     serialValue = mySerial.readString();
-
-    // }
-
-    fetchAPIData();
-    // 如果串口数据存在且有效，则优先处理串口数据
-    if (!serialValue.isEmpty())
-    {
-        processValues(serialValue); // 使用串口数据
-
-        // sendDeleteRequest();     // API数据处理后发送DELETE请求
-    }
-    else if (!apiValue.isEmpty()) // 如果串口数据为空，处理API数据
-    {
-        processValues(apiValue); // 使用API数据
-        // sendDeleteRequest();     // API数据处理后发送DELETE请求
-    }
-
-    // 清空串口和API数据，以便下一轮读取
-    // sendDeleteRequest();
-    // serialValue = "";
-    // apiValue = ""; 
-}
 
 const char *data_ca =
     "-----BEGIN CERTIFICATE-----\n"
@@ -64,10 +30,40 @@ const char *data_ca =
     "RmqDtmiXLnzqTpXbI+suyCsohKRg6Un0RC47+cpiVwHiXZAW+cn8eiNIjqbVgXLx\n"
     "KPpdzvvtTnOPlC7SQZSYmdunr3Bf9b77AiC/ZidstK36dRILKz7OA54=\n"
     "-----END CERTIFICATE-----\n";
-// 获取服务器数据并存储在 apiValue 中
+
+SoftwareSerial mySerial(19, 18); // RX, TX
+HTTPClient http;
+
+String serialValue;
+String apiValue;
+// 处理串口通信和服务器数据
+void handleCommunicationAndData()
+{
+    // int iii = 0;
+    // // 检查串口通信
+    // if (mySerial.available())
+    // {
+    //     serialValue = mySerial.readString();
+
+    // }
+
+    fetchAPIData();
+    // 如果串口数据存在且有效，则优先处理串口数据
+    if (!serialValue.isEmpty())
+    {
+        processValues(serialValue); // 使用串口数据
+
+        // sendDeleteRequest();     // API数据处理后发送DELETE请求
+    }
+    else if (!apiValue.isEmpty()) // 如果串口数据为空，处理API数据
+    {
+        processValues(apiValue); // 使用API数据
+        // sendDeleteRequest();     // API数据处理后发送DELETE请求
+    }
+}
+
 void fetchAPIData()
 {
-    HTTPClient http;
     http.begin("https://test.qingmo.moe/data", data_ca); // 开始连接
 
     int httpCode = http.GET(); // 发送GET请求
@@ -107,10 +103,11 @@ void fetchAPIData()
 // 发送DELETE请求以清除API数据
 void sendDeleteRequest()
 {
-    HTTPClient http;
     http.begin("https://test.qingmo.moe/clear"); // 连接清除端点
     http.addHeader("Content-Type", "application/json");
     int httpCodeDelete = http.sendRequest("DELETE");
+    serialValue = "";
+    apiValue = "";
 
     if (httpCodeDelete > 0)
     {
@@ -127,13 +124,9 @@ void sendDeleteRequest()
 // 根据串口或API的值执行操作
 void processValues(String value)
 {
-    int ii = 0;
     if (value == "1")
     {
         UI_display_time();
-        Serial.println("pm1.1");
-        serialValue = "";
-        apiValue = "";
         sendDeleteRequest();
     }
     else if (value == "2")
@@ -141,14 +134,10 @@ void processValues(String value)
         UI_display_weather();
         getHitokoto();
         sendDeleteRequest();
-        serialValue = "";
-        apiValue = "";
     }
     else if (value == "3")
     {
         robot_position();
-        serialValue = "";
-        apiValue = "";
         sendDeleteRequest();
     }
     else if (value == "4")
@@ -159,31 +148,33 @@ void processValues(String value)
         }
 
         sendDeleteRequest();
-        serialValue = "";
-        apiValue = "";
     }
     else if (value == "5")
     {
         for (int i = 0; i < 3; i++)
         {
-
             robot_Backward();
         }
-
         sendDeleteRequest();
-        serialValue = "";
-        apiValue = "";
     }
-    if (ii < 2)
+    else if (value == "6")
     {
-        ii++;
+        for (int i = 0; i < 2; i++)
+        {
+            robot_Left();
+        }
+        sendDeleteRequest();
+    }
+
+    int Reset = 0;
+    if (Reset < 2)
+    {
+        Reset++;
     }
     else
     {
         sendDeleteRequest();
-        serialValue = "";
-        apiValue = "";
-        ii = 0;
+        Reset = 0;
     }
     Serial.print("处理的value: ");
     Serial.println(value);

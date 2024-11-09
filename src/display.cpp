@@ -4,7 +4,7 @@
 // #include <ArduinoJson.h>
 // #include <Adafruit_GFX.h>
 
-//ArduinoJson::V704PB2::JsonDocument weatherData;
+// ArduinoJson::V704PB2::JsonDocument weatherData;
 
 int i = 0;
 void weather_display()
@@ -19,10 +19,9 @@ void weather_display()
 
     // U8G2.setCursor(5, 60);
     // U8G2.print("风速: " + windSpeed + "km/h");
-
 }
 
-void AHT10_display()
+void  AHT10_display()
 {
     Wire.begin();
     if (!AHT10::begin())
@@ -39,6 +38,9 @@ void AHT10_display()
         U8G2.print("室内温度 " + String(temp) + "°C");
         U8G2.setCursor(5, 60);
         U8G2.print("室内湿度 " + String(hum) + "%");
+        
+        Serial.println(temp);
+        Serial.println(hum);
     }
     else
     {
@@ -52,7 +54,7 @@ void Hitokoto_display()
     U8G2.print(saved_Hitokoto);
     Serial.println("句子: " + saved_Hitokoto);
     U8G2.setCursor(30, 55);
-    U8G2.print("--" );
+    U8G2.print("--");
     U8G2.setCursor(35, 55);
     U8G2.print(saved_Hitokoto_From);
 }
@@ -65,14 +67,13 @@ void UI_display_time()
     U8G2.print(time);
     Hitokoto_display();
     U8G2.sendBuffer();
-    
-        Serial.println("pm1");
+    Serial.println("pm1");
 }
 void UI_display_weather()
 {
     U8G2.setFont(u8g2_font_wqy12_t_gb2312);
     U8G2.clearBuffer();
-    // AHT10_display();
+    AHT10_display();
     weather_display();
     U8G2.sendBuffer();
 }

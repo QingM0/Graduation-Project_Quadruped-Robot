@@ -26,6 +26,7 @@ void servo_initialization();
 void robot_position();
 void robot_Forward();
 void robot_Backward();
+void robot_Left();
 
 void startAPMode();
 void connectToWiFi();

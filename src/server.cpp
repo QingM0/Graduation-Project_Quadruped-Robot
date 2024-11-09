@@ -79,8 +79,8 @@ void connectToWiFi()
         Serial.print("IP 地址: ");
         Serial.println(WiFi.localIP());
         configTime(60 * 60 * 8, 0, "ntp.aliyun.com"); // 用的阿里云的NTP服务器
-        getqweather();                                // 获取天气
-        getHitokoto();                                // 获取一言
+        //getqweather();                                // 获取天气
+        //getHitokoto();                                // 获取一言
     }
     else
     {
