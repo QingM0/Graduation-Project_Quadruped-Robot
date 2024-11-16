@@ -67,7 +67,6 @@ void UI_display_time()
     U8G2.print(time);
     Hitokoto_display();
     U8G2.sendBuffer();
-    Serial.println("pm1");
 }
 void UI_display_weather()
 {

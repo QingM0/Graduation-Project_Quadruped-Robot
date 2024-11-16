@@ -27,9 +27,11 @@ void robot_position();
 void robot_Forward();
 void robot_Backward();
 void robot_Left();
+void robot_Right();
 
 void startAPMode();
 void connectToWiFi();
+void handleNotFound();
 
 void handleRoot();
 void handleFormSubmission();

@@ -12,7 +12,6 @@ void setup()
     U8G2.begin();
     U8G2.enableUTF8Print();
     U8G2.setFont(u8g2_font_wqy12_t_chinese2);
-
     // 初始化EEPROM
     EEPROM.begin(EEPROM_SIZE);
     // 读取保存的WiFi信息

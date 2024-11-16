@@ -21,6 +21,7 @@ void startAPMode()
     server.on("/", handleRoot);
     server.on("/submit", handleFormSubmission);
     Serial.println("Web服务器已启动");
+    server.onNotFound(handleNotFound); // 未注册链接回调函数注册
 }
 
 void handleRoot()
@@ -39,7 +40,10 @@ void handleRoot()
 
     server.send(200, "text/html", html);
 }
-
+void handleNotFound() // 未注册链接回调函数
+{
+    server.send(404, "text/plain", "访问的页面不存在哦");
+}
 void handleFormSubmission()
 {
     String ssidInput = server.arg("ssid");
@@ -50,7 +54,7 @@ void handleFormSubmission()
     // 创建带有UTF-8编码的网页，提示保存成功并将重启
     String html = "<!DOCTYPE html>";
     html += "<html><head>";
-    html += "<meta charset=\"UTF-8\">";                          // 确保网页使用UTF-8编码
+    html += "<meta charset=\"UTF-8\">";                                                     // 确保网页使用UTF-8编码
     html += "<meta http-equiv=\"refresh\" content=\"3;url=/https://control.qingmo.moe/\">"; // 3秒后重定向到主页
     html += "<title>保存成功</title>";
     html += "</head><body>";
@@ -79,8 +83,8 @@ void connectToWiFi()
         Serial.print("IP 地址: ");
         Serial.println(WiFi.localIP());
         configTime(60 * 60 * 8, 0, "ntp.aliyun.com"); // 用的阿里云的NTP服务器
-        //getqweather();                                // 获取天气
-        //getHitokoto();                                // 获取一言
+        getqweather();                                // 获取天气
+        getHitokoto();                                // 获取一言
     }
     else
     {

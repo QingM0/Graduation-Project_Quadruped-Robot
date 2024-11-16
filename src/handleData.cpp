@@ -33,32 +33,28 @@ const char *data_ca =
 
 SoftwareSerial mySerial(19, 18); // RX, TX
 HTTPClient http;
-
+int Reset = 0;
 String serialValue;
 String apiValue;
 // 处理串口通信和服务器数据
 void handleCommunicationAndData()
 {
-    // int iii = 0;
-    // // 检查串口通信
-    // if (mySerial.available())
-    // {
-    //     serialValue = mySerial.readString();
+    if (mySerial.available())
+    {
+        serialValue = mySerial.readString();
+    }
+    else
+    {
+        fetchAPIData();
+    }
 
-    // }
-
-    fetchAPIData();
-    // 如果串口数据存在且有效，则优先处理串口数据
     if (!serialValue.isEmpty())
     {
-        processValues(serialValue); // 使用串口数据
-
-        // sendDeleteRequest();     // API数据处理后发送DELETE请求
+        processValues(serialValue);
     }
-    else if (!apiValue.isEmpty()) // 如果串口数据为空，处理API数据
+    else if (!apiValue.isEmpty())
     {
-        processValues(apiValue); // 使用API数据
-        // sendDeleteRequest();     // API数据处理后发送DELETE请求
+        processValues(apiValue);
     }
 }
 
@@ -68,7 +64,7 @@ void fetchAPIData()
 
     int httpCode = http.GET(); // 发送GET请求
 
-    if (httpCode > 0) // 如果请求成功
+    if (httpCode == HTTP_CODE_OK) // 如果请求成功
     {
         String payload = http.getString();
         Serial.println("服务器返回的数据: " + payload); // 输出获取到的数据
@@ -124,58 +120,54 @@ void sendDeleteRequest()
 // 根据串口或API的值执行操作
 void processValues(String value)
 {
-    if (value == "1")
+    // 使用switch语句
+    switch (value.toInt())
     {
+    case 1:
         UI_display_time();
-        sendDeleteRequest();
-    }
-    else if (value == "2")
-    {
+        break;
+    case 2:
         UI_display_weather();
         getHitokoto();
-        sendDeleteRequest();
-    }
-    else if (value == "3")
-    {
+        break;
+    case 3:
         robot_position();
-        sendDeleteRequest();
-    }
-    else if (value == "4")
-    {
+        break;
+    case 4:
         for (int i = 0; i < 3; i++)
         {
             robot_Forward();
         }
-
-        sendDeleteRequest();
-    }
-    else if (value == "5")
-    {
+        break;
+    case 5:
         for (int i = 0; i < 3; i++)
         {
             robot_Backward();
         }
-        sendDeleteRequest();
-    }
-    else if (value == "6")
-    {
+        break;
+    case 6:
         for (int i = 0; i < 2; i++)
         {
             robot_Left();
         }
-        sendDeleteRequest();
+        break;
+    case 7:
+        for (int i = 0; i < 2; i++)
+        {
+            robot_Right();
+        }
+        break;
+    default:
+        Serial.println("未知的值: " + value);
+        break;
     }
 
-    int Reset = 0;
-    if (Reset < 2)
-    {
-        Reset++;
-    }
-    else
+    if (++Reset >= 2)
     {
         sendDeleteRequest();
         Reset = 0;
     }
+
     Serial.print("处理的value: ");
     Serial.println(value);
 }
