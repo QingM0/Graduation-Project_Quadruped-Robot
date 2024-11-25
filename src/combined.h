@@ -12,7 +12,6 @@
 #include <EEPROM.h>
 #include <WebServer.h>
 #include <HTTPClient.h>
-#include "AHT10.h"
 #include "time.h"
 
 void getHitokoto();
@@ -28,6 +27,9 @@ void robot_Forward();
 void robot_Backward();
 void robot_Left();
 void robot_Right();
+void robot_Turn_left();
+void robot_Turn_Right();
+void robot_Push_up();
 
 void startAPMode();
 void connectToWiFi();

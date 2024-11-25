@@ -157,6 +157,15 @@ void processValues(String value)
             robot_Right();
         }
         break;
+    case 8:
+        robot_Turn_left();
+        break;
+    case 9:
+        robot_Turn_Right();
+        break;
+    case 10:
+        robot_Push_up();
+        break;
     default:
         Serial.println("未知的值: " + value);
         break;

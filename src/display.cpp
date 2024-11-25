@@ -1,5 +1,4 @@
 #include "combined.h"
-#include "AHT10.h"
 // #include <U8g2lib.h>
 // #include <ArduinoJson.h>
 // #include <Adafruit_GFX.h>
@@ -21,32 +20,6 @@ void weather_display()
     // U8G2.print("风速: " + windSpeed + "km/h");
 }
 
-void  AHT10_display()
-{
-    Wire.begin();
-    if (!AHT10::begin())
-    {
-        // Serial.println(F("AHT10 not detected!"));
-        // Serial.flush();
-        //  ESP.deepSleep(0);
-    }
-    float temp, hum;
-
-    if (AHT10::measure(&temp, &hum))
-    {
-        U8G2.setCursor(5, 45);
-        U8G2.print("室内温度 " + String(temp) + "°C");
-        U8G2.setCursor(5, 60);
-        U8G2.print("室内湿度 " + String(hum) + "%");
-        
-        Serial.println(temp);
-        Serial.println(hum);
-    }
-    else
-    {
-        Serial.println(F("AHT10 read error!"));
-    }
-}
 void Hitokoto_display()
 {
     U8G2.setFont(u8g2_font_wqy12_t_gb2312);
@@ -72,7 +45,6 @@ void UI_display_weather()
 {
     U8G2.setFont(u8g2_font_wqy12_t_gb2312);
     U8G2.clearBuffer();
-    AHT10_display();
     weather_display();
     U8G2.sendBuffer();
 }
