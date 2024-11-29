@@ -131,6 +131,7 @@ void processValues(String value)
         getHitokoto();
         break;
     case 3:
+        zc();
         robot_position();
         break;
     case 4:

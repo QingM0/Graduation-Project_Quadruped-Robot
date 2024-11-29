@@ -20,6 +20,8 @@ void getqweather();
 void weather_display();
 void UI_display_time();
 void UI_display_weather();
+void yh();
+void zc();
 
 void servo_initialization();
 void robot_position();

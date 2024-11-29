@@ -107,7 +107,6 @@ void servo_initialization()
         servos[i].attach(servoPins[i], MIN_WIDTH, MAX_WIDTH);
     }
 }
-
 // 设置舵机位置函数，接受一个位置数组和一个延时时间
 void setServoPositions(const int positions[], int delayTime)
 {
@@ -120,14 +119,12 @@ void setServoPositions(const int positions[], int delayTime)
     // 在设置完所有舵机的位置后进行延时
     delay(delayTime);
 }
-
 // 应用舵机位置函数
 void applyServoPosition(const ServoPosition &position)
 {
     // 调用 setServoPositions 函数设置舵机位置
     setServoPositions(position.positions, position.delayTime);
 }
-
 // 机器人运动函数，接受一个步态数组和步态数量
 void robot_Movement(const ServoPosition steps[], int stepCount)
 {
@@ -137,7 +134,6 @@ void robot_Movement(const ServoPosition steps[], int stepCount)
         applyServoPosition(steps[i]);
     }
 }
-
 // 机器人初始位置函数，设置机器人到初始位置
 void robot_position()
 {

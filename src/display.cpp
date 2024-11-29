@@ -1,10 +1,28 @@
 #include "combined.h"
-// #include <U8g2lib.h>
-// #include <ArduinoJson.h>
-// #include <Adafruit_GFX.h>
+#include "emoticons.h"
 
-// ArduinoJson::V704PB2::JsonDocument weatherData;
-
+// 显示坐标和尺寸的常量
+const int X_POS = 2;
+const int Y_POS = 2;
+const int WIDTH = 128;
+const int HEIGHT = 64;
+// 辅助函数，用于绘制图像
+void drawImage(const uint8_t* image) {
+    U8G2.clearBuffer();
+    U8G2.drawXBMP(X_POS, Y_POS, WIDTH, HEIGHT, image);
+    U8G2.sendBuffer();
+    delay(20);
+}
+// 使用辅助函数的具体实现
+void yh() { drawImage(youhao); }
+void zc() { drawImage(zhengchang); }
+void sj() { drawImage(shuijiao); }
+void nh() { drawImage(nihao); }
+void la() { drawImage(laia); }
+void gp() { drawImage(goupao); }
+void tx() { drawImage(touxiang); }
+void yb() { drawImage(yaobai); }
+void sz() { drawImage(shanzi); }
 int i = 0;
 void weather_display()
 {
