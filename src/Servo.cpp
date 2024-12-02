@@ -114,7 +114,7 @@ void setServoPositions(const int positions[], int delayTime)
     for (int i = 0; i < SERVO_COUNT; ++i)
     {
         servos[i].write(positions[i]);
-        delay(30);
+        delay(35);
     }
     // 在设置完所有舵机的位置后进行延时
     delay(delayTime);

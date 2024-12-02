@@ -124,59 +124,77 @@ void processValues(String value)
     switch (value.toInt())
     {
     case 1:
+        sendDeleteRequest();
         UI_display_time();
         break;
     case 2:
+        sendDeleteRequest();
         UI_display_weather();
         getHitokoto();
         break;
     case 3:
+        sendDeleteRequest();
         zc();
         robot_position();
         break;
     case 4:
+        sendDeleteRequest();
+        nh();
         for (int i = 0; i < 3; i++)
         {
             robot_Forward();
         }
         break;
     case 5:
+        sendDeleteRequest();
+        la();
         for (int i = 0; i < 3; i++)
         {
             robot_Backward();
         }
         break;
     case 6:
+        sendDeleteRequest();
+        gp();
         for (int i = 0; i < 2; i++)
         {
             robot_Left();
         }
         break;
     case 7:
+        sendDeleteRequest();
+        yb();
         for (int i = 0; i < 2; i++)
         {
             robot_Right();
         }
         break;
     case 8:
+        sendDeleteRequest();
+        tx();
         robot_Turn_left();
         break;
     case 9:
+        sendDeleteRequest();
+        sz();
         robot_Turn_Right();
         break;
     case 10:
+        sendDeleteRequest();
+        yh();
         robot_Push_up();
         break;
     default:
+        UI_display_time();
         Serial.println("未知的值: " + value);
         break;
     }
 
-    if (++Reset >= 2)
-    {
-        sendDeleteRequest();
-        Reset = 0;
-    }
+    // if (++Reset >= 2)
+    // {
+    //     sendDeleteRequest();
+    //     Reset = 0;
+    // }
 
     Serial.print("处理的value: ");
     Serial.println(value);

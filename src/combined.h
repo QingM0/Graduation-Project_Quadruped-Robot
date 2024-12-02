@@ -22,6 +22,13 @@ void UI_display_time();
 void UI_display_weather();
 void yh();
 void zc();
+void sj();
+void nh();
+void la();
+void gp();
+void tx();
+void yb();
+void sz();
 
 void servo_initialization();
 void robot_position();
