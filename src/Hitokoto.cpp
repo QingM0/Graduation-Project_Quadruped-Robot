@@ -36,7 +36,7 @@ const char *Hitokoto_ca =
     "nE0AAp9JSHxDYsma9pi4g0Phg3BgOm2euTRzw7R0SzU=\n"
     "-----END CERTIFICATE-----\n";
 
-const char *Hitokoto_url = "https://v1.hitokoto.cn/?encode=json&max_length=10";
+const char *Hitokoto_url = "https://v1.hitokoto.cn/?encode=json&max_length=11";
 String response;
 String saved_Hitokoto = "";
 String saved_Hitokoto_From = "";
@@ -49,14 +49,14 @@ void getHitokoto()
     int httpCode = http.GET(); // 发送 HTTP 请求
 
     // 获取响应状态码
-    Serial.printf("HTTP 状态码: %d\n", httpCode);
+    //Serial.printf("HTTP 状态码: %d\n", httpCode);
 
-    if (httpCode > 0)
+    if (httpCode == HTTP_CODE_OK)
     {
         // 获取响应正文并存储到 response 变量中
         response = http.getString();
-        Serial.println("响应数据:");
-        Serial.println(response + "\n");
+        //Serial.println("响应数据:");
+        //Serial.println(response + "\n");
     }
     else
     {
@@ -82,6 +82,6 @@ void getHitokoto()
     saved_Hitokoto_From = Hitokoto["from"].as<String>();
 
     // 打印句子和来源
-    // Serial.println("句子: " + saved_Hitokoto);
+    Serial.println("句子: " + saved_Hitokoto);
     Serial.println("来源: " + saved_Hitokoto_From);
 }

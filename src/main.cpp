@@ -2,8 +2,8 @@
 
 U8G2_SSD1306_128X64_NONAME_F_SW_I2C U8G2(U8G2_R0, /* clock=*/22, /* data=*/21, /* reset=*/16);
 
-unsigned long previousMillis = 0; // 用于计算时间间隔
-const long interval = 3000;       // 每秒请求一次
+// unsigned long previousMillis = 0; // 用于计算时间间隔
+// const long interval = 3000;       // 每秒请求一次
 
 void setup()
 {
@@ -22,7 +22,6 @@ void setup()
     if (String(ssid) != "")
     {
         connectToWiFi();
-        //sendDeleteRequest();
     }
     else
     {
@@ -32,19 +31,19 @@ void setup()
 
 void loop()
 {
-    unsigned long currentMillis = millis();
+   // unsigned long currentMillis = millis();
 
-    if (WiFi.status() == WL_CONNECTED)
-    {
+    //if (WiFi.status() == WL_CONNECTED)
+    //{
         //每秒请求一次数据并处理串口通信
-        if (currentMillis - previousMillis >= interval)
-        {
-            previousMillis = currentMillis;
+        // if (currentMillis - previousMillis >= interval)
+        // {
+        //     previousMillis = currentMillis;
             handleCommunicationAndData(); // 处理串口和服务器数据
-        }
-    }
-    else
-    {
-        server.handleClient(); // WiFi未连接时处理客户端请求
-    }
+        //}
+    //}
+    //else
+    //{
+    //    server.handleClient(); // WiFi未连接时处理客户端请求
+    //}
 }

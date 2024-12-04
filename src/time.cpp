@@ -1,5 +1,5 @@
 #include "combined.h"
-#include "time.h"  
+//#include "time.h"  
 
 struct tm timeinfo;
 String time_1()

@@ -33,7 +33,6 @@ const char *data_ca =
 
 SoftwareSerial mySerial(19, 18); // RX, TX
 HTTPClient http;
-int Reset = 0;
 String serialValue;
 String apiValue;
 // 处理串口通信和服务器数据
@@ -71,21 +70,12 @@ void fetchAPIData()
 
         // 解析JSON数组数据
         StaticJsonDocument<200> doc;
-        DeserializationError error = deserializeJson(doc, payload);
-
-        if (!error)
-        {
-            JsonArray array = doc.as<JsonArray>(); // 将JSON解析为数组
-
-            int valueFromServer = array[0]["number"]; // 获取数组中的number字段
-            apiValue = String(valueFromServer);       // 将服务器的值保存为字符串
-            Serial.print("API获取到的value: ");
-            Serial.println(apiValue);
-        }
-        else
-        {
-            Serial.println("解析JSON时出错");
-        }
+        deserializeJson(doc, payload);
+        JsonArray array = doc.as<JsonArray>();    // 将JSON解析为数组
+        int valueFromServer = array[0]["number"]; // 获取数组中的number字段
+        apiValue = String(valueFromServer);       // 将服务器的值保存为字符串
+        Serial.print("API获取到的value: ");
+        Serial.println(apiValue);
     }
     else
     {
@@ -105,7 +95,7 @@ void sendDeleteRequest()
     serialValue = "";
     apiValue = "";
 
-    if (httpCodeDelete > 0)
+    if (httpCodeDelete == HTTP_CODE_OK)
     {
         Serial.println("服务器数据已清除");
     }
@@ -120,81 +110,92 @@ void sendDeleteRequest()
 // 根据串口或API的值执行操作
 void processValues(String value)
 {
+     int intValue = value.toInt();
+    if (intValue < 0 || intValue > 11)
+    {
+        sendDeleteRequest();
+        Serial.println("接收到无效的值，已发送DELETE请求: " + intValue);
+        return; // 结束函数
+    }
     // 使用switch语句
-    switch (value.toInt())
+    switch (intValue)
     {
     case 1:
+        UI_display_weather();
+        delay(3000);
+        getHitokoto();
         sendDeleteRequest();
-        UI_display_time();
         break;
     case 2:
-        sendDeleteRequest();
-        UI_display_weather();
-        getHitokoto();
-        break;
-    case 3:
-        sendDeleteRequest();
         zc();
         robot_position();
-        break;
-    case 4:
+        getHitokoto();
         sendDeleteRequest();
+        break;
+    case 3:
         nh();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             robot_Forward();
         }
-        break;
-    case 5:
+        getHitokoto();
         sendDeleteRequest();
+        break;
+    case 4:
         la();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             robot_Backward();
         }
+        getHitokoto();
+        sendDeleteRequest();
+        break;
+    case 5:
+        gp();
+        robot_Turn_left();
+        getHitokoto();
+        sendDeleteRequest();
         break;
     case 6:
+        yb();
+        robot_Turn_Right();
+        getHitokoto();
         sendDeleteRequest();
-        gp();
-        for (int i = 0; i < 2; i++)
-        {
-            robot_Left();
-        }
         break;
     case 7:
+        tx();
+        robot_Dancing1();
+        getHitokoto();
         sendDeleteRequest();
-        yb();
-        for (int i = 0; i < 2; i++)
-        {
-            robot_Right();
-        }
         break;
     case 8:
+        sz();
+        robot_Dancing2();
+        getHitokoto();
         sendDeleteRequest();
-        tx();
-        robot_Turn_left();
         break;
     case 9:
+        yh();
+        robot_Dancing3();
+        getHitokoto();
         sendDeleteRequest();
-        sz();
-        robot_Turn_Right();
         break;
     case 10:
+        sj();
+        robot_sleep();
+        getHitokoto();
         sendDeleteRequest();
-        yh();
-        robot_Push_up();
+        break;
+    case 11:
+        robot_fuwei();
+        getHitokoto();
+        sendDeleteRequest();
         break;
     default:
         UI_display_time();
         Serial.println("未知的值: " + value);
         break;
     }
-
-    // if (++Reset >= 2)
-    // {
-    //     sendDeleteRequest();
-    //     Reset = 0;
-    // }
 
     Serial.print("处理的value: ");
     Serial.println(value);

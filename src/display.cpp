@@ -43,7 +43,7 @@ void Hitokoto_display()
     U8G2.setFont(u8g2_font_wqy12_t_gb2312);
     U8G2.setCursor(5, 40);
     U8G2.print(saved_Hitokoto);
-    Serial.println("句子: " + saved_Hitokoto);
+    //Serial.println("句子: " + saved_Hitokoto);
     U8G2.setCursor(30, 55);
     U8G2.print("--");
     U8G2.setCursor(35, 55);

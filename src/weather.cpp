@@ -38,49 +38,38 @@ const char *qweather_ca =
     "00u/I5sUKUErmgQfky3xxzlIPK1aEn8=\n"
     "-----END CERTIFICATE-----\n";
 const char *qweather_url = "https://devapi.qweather.com/v7/weather/now?location=101230110&key=46d23317ebe64262ae190eb77c01cbe9";
-int Delayed_access_qweather_link = 0;
 String jsonStr;
 String saved_qweather_text = "";
 String saved_qweather_temp = "";
 void getqweather()
 {
-    Serial.printf("Delayed_access_link: %d\n", Delayed_access_qweather_link);
+
     HTTPClient http;
-    if (Delayed_access_qweather_link == 0)
-    {
-        http.begin(qweather_url, qweather_ca);
+    http.begin(qweather_url, qweather_ca);
 
-        http.setTimeout(10000);
-        http.GET();
-        WiFiClient *stream = http.getStreamPtr(); // 获取HTTP响应流
-        int size = http.getSize();                // 获取 HTTP 响应体的大小
+    // http.setTimeout(10000);
+    http.GET();
+    WiFiClient *stream = http.getStreamPtr(); // 获取HTTP响应流
+    int size = http.getSize();                // 获取 HTTP 响应体的大小
 
-        uint8_t inbuff[size];                                                   // 初始化inbuff数组
-        stream->readBytes(inbuff, size);                                        // 将http流数据写入inbuff中
-        uint8_t *outbuf = NULL;                                                 // 解压后的输出流
-        uint32_t outresult = 0;                                                 // 解压后的大小，在调用解压方法后会被赋值。
-        int result = ArduinoUZlib::decompress(inbuff, size, outbuf, outresult); // 调用解压函数
-        Serial.write(outbuf, outresult);                                        // 输出解压后的数据
+    uint8_t inbuff[size];                                                   // 初始化inbuff数组
+    stream->readBytes(inbuff, size);                                        // 将http流数据写入inbuff中
+    uint8_t *outbuf = NULL;                                                 // 解压后的输出流
+    uint32_t outresult = 0;                                                 // 解压后的大小，在调用解压方法后会被赋值。
+    int result = ArduinoUZlib::decompress(inbuff, size, outbuf, outresult); // 调用解压函数
+    // Serial.write(outbuf, outresult);                                        // 输出解压后的数据
 
-        http.end();
-        jsonStr = String((char *)outbuf); // 将解压后的数据转换为字符串
-    }
-
-    Delayed_access_qweather_link++;
-
-    if (Delayed_access_qweather_link == 10)
-    {
-        Delayed_access_qweather_link = 0;
-    }
+    http.end();
+    jsonStr = String((char *)outbuf); // 将解压后的数据转换为字符串
 
     DynamicJsonDocument qweather(1024);
     DeserializationError error = deserializeJson(qweather, jsonStr); // 将json字符串转换为json对象
 
     // Serial.println(jsonStr);
-     if (error)
+    if (error)
     {
-         Serial.print("deserializeJson() failed: ");
-         Serial.println(error.c_str());
+        Serial.print("deserializeJson() failed: ");
+        Serial.println(error.c_str());
         return;
     }
     saved_qweather_text = qweather["now"]["text"].as<String>();

@@ -34,11 +34,13 @@ void servo_initialization();
 void robot_position();
 void robot_Forward();
 void robot_Backward();
-void robot_Left();
-void robot_Right();
 void robot_Turn_left();
 void robot_Turn_Right();
-void robot_Push_up();
+void robot_Dancing1();
+void robot_Dancing2();
+void robot_Dancing3();
+void robot_sleep();
+void robot_fuwei();
 
 void startAPMode();
 void connectToWiFi();
